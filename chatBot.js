@@ -1,8 +1,10 @@
+const {prefix, token} = require('./config.json');
 const Discord = require("discord.js")
 const client = new Discord.Client()
 var fs = require('fs'); //파일입출력 모듈
 const internal = require("stream");
 var now = new Date(); // 현재날짜 및 시간 객체
+
 
 
 
@@ -20,11 +22,20 @@ client.on("message", msg => {
 
 
 
+  //prefix로 시작하지 않는경우 통과   를 위한 명령어 
+  if (!msg.content.startsWith(prefix) || msg.author.bot) return; 
+  const args=msg.content.slice(prefix.length).split(" "); 
+  const command=args.shift().toLowerCase();
+  //prefix로 시작하지 않는경우 통과   를 위한 명령어 end
+
+
+
+
   //테스트 조건문
-  if (msg.content === "ping") {
+  if (command === "ping") {
     msg.reply("Pong!")
   }
-  if (msg.content === "!현재시간") { 
+  if (command === "현재시간") { 
     msg.reply(now.getHours() + "시 " + now.getMinutes() + "분");
   } // 테스트 조건문 end
 
@@ -33,7 +44,7 @@ client.on("message", msg => {
 
 
   //공부시작 시간 체크
-  if (msg.content === "!공부시작") {
+  if (command === "공부시작") {
     var data = String(now.getHours()) +"."+ String(now.getMinutes());
     console.log(msg.author.id);
 
@@ -50,7 +61,7 @@ client.on("message", msg => {
 
 
   //공부끝 시간 체크
-  if (msg.content === "!공부끝") {
+  if (command === "공부끝") {
     var fileName = msg.author.id + ".txt";
 
     try {
@@ -109,8 +120,9 @@ client.on("message", msg => {
 
 
 
+
 })
 
 
 //디스코드 봇 토큰
-client.login('OTA3OTU2NjY1MTEzMDE4NDA4.YYuuiQ.Rn2yQ9lGPLr_24sky29TWQHLOYA');
+client.login(token);
