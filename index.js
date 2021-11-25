@@ -8,7 +8,6 @@ var now = new Date(); // 현재날짜 및 시간 객체
 
 
 
-
 //로그인 콘솔 출력
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
@@ -48,7 +47,7 @@ client.on("message", msg => {
     var data = String(now.getHours()) +"."+ String(now.getMinutes());
     console.log(msg.author.id);
 
-    var fileName = msg.author.id + ".txt";
+    var fileName = "data/stopWatch/" + msg.author.id + ".txt";
     fs.writeFileSync(fileName, data, 'utf8', function(error){  // 파일에 data내용 저장
       console.log('studyStart write end');
     });
@@ -62,7 +61,7 @@ client.on("message", msg => {
 
   //공부끝 시간 체크
   if (command === "공부끝") {
-    var fileName = msg.author.id + ".txt";
+    var fileName = "data/stopWatch/" + msg.author.id + ".txt";
 
     try {
     // 파일 있는지 확인. 없으면 catch
@@ -107,8 +106,46 @@ client.on("message", msg => {
 
 
 
+  
 
 
+  //디데이부분 수정 필요
+  //디데이 설정 
+  if (msg.content.startsWith("~디데이설정")) {
+    console.log("dDaySetStart");
+
+    var dDayData = msg.toString().split(" ");
+    var dDayTitle = dDayData[1];
+    var dDayWhen = dDayData[2].toString().split('/');
+    var fileName = "data/dDay/" + dDayTitle + ".txt";
+
+    fs.writeFileSync(fileName, dDayData[2], 'utf8', function(error){  // 파일에 data내용 저장
+      console.log('dDaySet write end');
+    });
+
+    console.log(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
+    msg.reply(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
+    
+  } //디데이 설정 end
+
+
+
+
+
+  //디데이 달력 보기
+  if (command === "디데이보기") {
+    fs.readdir('./data/dDay', (err, file_list) => { //폴더열기
+      var fileArr = file_list.toString().split(','); //dDay 배열
+
+      fileArr.forEach((el,i) => {
+        fs.readFile("./data/dDay/"+el, 'utf8', function(err, data) {
+          msg.reply(el.replace('.txt','') + ' ' + data);
+        });
+      });
+    });
+  } //디데이 달력 보기 end
+
+  
 
 
 
