@@ -1,9 +1,10 @@
 const {prefix, token} = require('./config.json');
-const Discord = require("discord.js")
+const Discord = require("discord.js") // npm install discord.js 필요
 const client = new Discord.Client()
-var fs = require('fs'); //파일입출력 모듈
+var fs = require('fs');
 const internal = require("stream");
 var now = new Date(); // 현재날짜 및 시간 객체
+var moment = require('moment') // npm install --save moment 필요
 
 
 
@@ -35,7 +36,7 @@ client.on("message", msg => {
     msg.reply("Pong!")
   }
   if (command === "현재시간") { 
-    msg.reply(now.getHours() + "시 " + now.getMinutes() + "분");
+    msg.reply(now.getFullYear() + "년 " + (now.getMonth()+1)  + "월 " +now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분");
   } // 테스트 조건문 end
 
 
@@ -47,7 +48,7 @@ client.on("message", msg => {
     var data = String(now.getHours()) +"."+ String(now.getMinutes());
     console.log(msg.author.id);
 
-    var fileName = "data/stopWatch/" + msg.author.id + ".txt";
+    var fileName = "./data/stopWatch/" + msg.author.id + ".txt";
     fs.writeFileSync(fileName, data, 'utf8', function(error){  // 파일에 data내용 저장
       console.log('studyStart write end');
     });
@@ -113,18 +114,22 @@ client.on("message", msg => {
   //디데이 설정 
   if (msg.content.startsWith("~디데이설정")) {
     console.log("dDaySetStart");
+    try {
+      var dDayData = msg.toString().split(" ");
+      var dDayTitle = dDayData[1];
+      var dDayWhen = dDayData[2].toString().split('/');
+      var fileName = "data/dDay/" + dDayTitle + ".txt";
+    
+      fs.writeFileSync(fileName, dDayData[2], 'utf8', function(error){  // 파일에 data내용 저장
+        console.log('dDaySet write end');
+      });
+      console.log(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
+      msg.reply(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
+    
+    } catch {
+      msg.reply("양식이 올바르지 않습니다. 예) ~디데이설정 기말고사 12/15");
+    }
 
-    var dDayData = msg.toString().split(" ");
-    var dDayTitle = dDayData[1];
-    var dDayWhen = dDayData[2].toString().split('/');
-    var fileName = "data/dDay/" + dDayTitle + ".txt";
-
-    fs.writeFileSync(fileName, dDayData[2], 'utf8', function(error){  // 파일에 data내용 저장
-      console.log('dDaySet write end');
-    });
-
-    console.log(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
-    msg.reply(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
     
   } //디데이 설정 end
 
@@ -139,18 +144,45 @@ client.on("message", msg => {
 
       fileArr.forEach((el,i) => {
         fs.readFile("./data/dDay/"+el, 'utf8', function(err, data) {
-          msg.reply(el.replace('.txt','') + ' ' + data);
+          var dDayWhen = data.toString().split('/');
+          var t1 = moment(); //현재 날짜
+          var t2 = moment(String(now.getFullYear()) + "-" + dDayWhen[0] + "-" + dDayWhen[1] , 'YYYY-MM-DD'); // 저장된 날짜
+
+          msg.reply(el.replace('.txt','') + "까지 D - "+ (Number(t2.diff(t1,'days')) + 2)); //dDay 답장
         });
       });
     });
   } //디데이 달력 보기 end
 
-  
 
+  //디데이 삭제
+  if (msg.content.startsWith("~디데이삭제")) {
+    var dDayData = msg.toString().split(" ");
+    var fileName = "data/dDay/" + dDayData[1] + ".txt";
+    try {
 
+      fs.statSync(fileName); //파일 존재 확인
+      try {
+        fs.unlinkSync(fileName) // 파일 존재시 삭제
+        msg.reply("해당 이벤트가 삭제되었습니다.");
+    } catch (error) {
+        if(err.code == 'ENOENT'){
+            console.log("file delete error");
+        }
+    }
+    
+    } catch (error) {
+    
+      //파일이 없다면 에러 발생
+      msg.reply("설정되지 않은 이벤트입니다.");
+        if (error.code === "ENOENT") {
+           console.log("파일이 존재하지 않습니다.");
+        }
+    }
+    
+    
 
-
-
+  } //디데이 삭제 end
 
 
 
@@ -162,4 +194,4 @@ client.on("message", msg => {
 
 
 //디스코드 봇 토큰
-client.login(token);
+client.login('OTA3OTU2NjY1MTEzMDE4NDA4.YYuuiQ.Rn2yQ9lGPLr_24sky29TWQHLOYA');
