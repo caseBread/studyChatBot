@@ -1,11 +1,13 @@
 const {prefix, token} = require('./config.json');
 const Discord = require("discord.js") // npm install discord.js 필요
 const client = new Discord.Client()
-var fs = require('fs');
+const fs = require('fs'); // 파일 입출력 모듈
 const internal = require("stream");
 var now = new Date(); // 현재날짜 및 시간 객체
-var moment = require('moment') // npm install --save moment 필요
+const moment = require('moment') // npm install --save moment 필요 (디데이 출력 모듈)
 
+//npm install discord.js @discord/opus 필요
+//npm install --save ffmpeg-binaries 필요
 
 
 
@@ -184,6 +186,34 @@ client.on("message", msg => {
 
   } //디데이 삭제 end
 
+
+
+
+
+
+  // 백색소음 틀기
+  if (command === "재생") {
+    if (msg.member.voice.channel) {
+      msg.member.voice.channel.join()
+        .then(connection => {
+          msg.reply("재생한다!");
+          const dispatcher = connection.play("music/square.mp3");
+          dispatcher.on("end", end => {});
+        })
+        .catch(console.log);
+    } else {
+      msg.reply("널 따라갈건데 너가 보이스채널에 없어.");
+    }
+  }
+  if (command === "보이스나가") {
+    
+    if (msg.member.voice.channel) {
+      msg.member.voice.channel.leave();
+      msg.reply('bye!');
+    } else {
+      msg.reply('이미 나왔는데..');
+    }
+  }
 
 
 
