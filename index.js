@@ -191,8 +191,8 @@ client.on("message", msg => {
 
 
 
-  // 백색소음 틀기
-  if (command === "재생") {
+  // 음악재생
+  if (command === "음악") {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join()
         .then(connection => {
@@ -202,18 +202,21 @@ client.on("message", msg => {
         })
         .catch(console.log);
     } else {
-      msg.reply("널 따라갈건데 너가 보이스채널에 없어.");
+      msg.reply("먼저 보이스채널에 입장해주세요.");
     }
-  }
-  if (command === "보이스나가") {
+  } // 음악재생 end
+
+
+  // 보이스채널 나가기
+  if (command === "나가") {
     
     if (msg.member.voice.channel) {
       msg.member.voice.channel.leave();
       msg.reply('bye!');
     } else {
-      msg.reply('이미 나왔는데..');
+      msg.reply('이미 나왔어요.');
     }
-  }
+  } // 보이스채널 나가기 end
 
 
 
@@ -224,4 +227,4 @@ client.on("message", msg => {
 
 
 //디스코드 봇 토큰
-client.login('OTA3OTU2NjY1MTEzMDE4NDA4.YYuuiQ.Rn2yQ9lGPLr_24sky29TWQHLOYA');
+client.login(token);
