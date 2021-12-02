@@ -1,10 +1,15 @@
-const {prefix, token} = require('./config.json');
+const {prefix, token, youtubeAPI} = require('./config.json');
 const Discord = require("discord.js") // npm install discord.js 필요
+const {MessageEmbed} = require('discord.js');
 const client = new Discord.Client()
 const fs = require('fs'); // 파일 입출력 모듈
 const internal = require("stream");
 var now = new Date(); // 현재날짜 및 시간 객체
 const moment = require('moment') // npm install --save moment 필요 (디데이 출력 모듈)
+const Youtube = require('simple-youtube-api'); // npm install simple-youtube-api
+const youtube = new Youtube(youtubeAPI);
+const ytdl = require('ytdl-core'); // npm install ytdl-core
+const { getVideoID } = require('ytdl-core');
 
 //npm install discord.js @discord/opus 필요
 //npm install --save ffmpeg-binaries 필요
@@ -197,10 +202,10 @@ client.on("message", msg => {
       msg.member.voice.channel.join()
         .then(connection => {
           msg.reply("재생한다!");
-          const dispatcher = connection.play("music/square.mp3");
+          const dispatcher = connection.play("music/comfortable.mp3"); 
           dispatcher.on("end", end => {});
         })
-        .catch(console.log);
+        .catch(console.log); 
     } else {
       msg.reply("먼저 보이스채널에 입장해주세요.");
     }
@@ -219,6 +224,31 @@ client.on("message", msg => {
   } // 보이스채널 나가기 end
 
 
+
+
+
+  //유튜브 음악 재생
+  if (msg.content.startsWith(prefix+"재생")) {
+    var msgData = msg.toString().split(" ");
+    if (msg.member.voice.channel) {
+      msg.member.voice.channel.join()
+        .then(connection => {
+          youtube.searchVideos(msgData[1]).then(results => { // 유튜브에 msgData[1] 검색
+            const play = connection.play(ytdl("https://www.youtube.com/watch?v="+results[0].id)); 
+            play.on('start', () => {
+              //내용 추가 필요
+            })
+            console.log(results[0].title);
+            msg.reply(results[0].title + " 을 재생한다!");
+          })
+
+        })
+        .catch(console.log); 
+    } else {
+      msg.reply("먼저 보이스채널에 입장해주세요.");
+    }
+  } // 유튜브 음악 재생 end
+  
 
 
 
