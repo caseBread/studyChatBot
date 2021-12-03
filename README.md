@@ -25,8 +25,9 @@
     + 주간 순위<br/>
 <br/>
 3. **D-day 기능<br/>**
+<br/>
+4. 음악 재생 기능
 
-#### 4. 음악 재생 기능
 + 공부에 집중되는 백색소음 재생 기능<br/>
 + 유튜브에서 원하는 노래 재생 기능
 
@@ -46,23 +47,23 @@
 ### Module Installation
 
 + discord.js
-```sh
+```
 npm install discord.js@12.5.3
 ```
 + moment
-```sh
+```
 npm install --save moment
 ```
 + simple-youtube-api
-```sh
+```
 npm install simple-youtube-api
 ```
 + ytdl-core
-```sh
+```
 npm install ytdl-core
 ```
 + ffmpeg-binaries
-```sh
+```
 npm install --save ffmpeg-binaries
 ```
 
