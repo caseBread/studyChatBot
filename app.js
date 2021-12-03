@@ -140,7 +140,7 @@ client.on("message", msg => {
             sumHours += Number(timeData[0]);
             sumMinutes += Number(timeData[1]);
           });
-          msg.reply("\n<@" + el.replace('.txt','') + "> 님은 총" + sumHours + "시간 " + sumMinutes + "분 공부하였습니다.")
+          msg.reply("\n<@" + el.replace('.txt','') + "> 님은 총" + sumHours + "시간 " + sumMinutes + "분 공부하였습니다.");
         });
       });
     });
