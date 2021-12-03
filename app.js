@@ -19,7 +19,7 @@ const { getVideoID } = require('ytdl-core');
 //로그인 콘솔 출력
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
-  client.user.setPresence({ game: { name: "챗봇 상태메시지 적는곳"}, status: "online"})
+  client.user.setPresence({ game: { name: "상메뭐로하지"}, status: "online"})
 });
 
 
@@ -89,6 +89,15 @@ client.on("message", msg => {
         //공부시간 출력
         msg.reply(studyHours + "시간 " + studyMinutes + "분 공부하였습니다.");
         console.log(studyHours + "h " + studyMinutes + "m");
+
+        //studyTime 기록
+        var fileName = "data/studyTime/" + msg.author.id + ".txt";
+        var appendData = String(studyHours) + "." + String(studyMinutes) + " ";
+        fs.appendFile(fileName, appendData, function(err) {
+          if (err) throw err;
+          console.log('The "data to append" was appended to file!');
+        });
+
       });
       //공부시간 출력하였으면 공부시작 적은 파일 삭제.
       try {
@@ -98,6 +107,9 @@ client.on("message", msg => {
               console.log("file delete error");
           }
       }
+
+
+      
 
     } catch (error) {
       //(공부시작을 하지 않은 경우)
@@ -110,6 +122,29 @@ client.on("message", msg => {
   } //공부끝 시간 체크 end
 
 
+
+
+  //수정 필요
+  //공부시간 순위
+  if (command === '순위') {
+    fs.readdir('./data/studyTime', (err, file_list) => { //폴더열기
+      var fileArr = file_list.toString().split(','); //studyTime 배열
+      fileArr.forEach((el,i) => {
+        fs.readFile("./data/studyTime/"+el, 'utf8', function(err, data) {
+          data = data.slice(0,-1);
+          var timeDiv = data.toString().split(' ');
+          var sumHours = 0;
+          var sumMinutes = 0;
+          timeDiv.forEach((j,k) => { // j형식 = ~.@ ( ~는 시, @는 분)
+            var timeData = j.toString().split('.');
+            sumHours += Number(timeData[0]);
+            sumMinutes += Number(timeData[1]);
+          });
+          msg.reply("\n<@" + el.replace('.txt','') + "> 님은 총" + sumHours + "시간 " + sumMinutes + "분 공부하였습니다.")
+        });
+      });
+    });
+  }
 
 
 
@@ -197,6 +232,8 @@ client.on("message", msg => {
 
 
   // 음악재생
+
+
   if (command === "음악") {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join()
@@ -237,13 +274,14 @@ client.on("message", msg => {
             const play = connection.play(ytdl("https://www.youtube.com/watch?v="+results[0].id)); 
             play.on('start', () => {
               //내용 추가 필요
-            })
+            });
             console.log(results[0].title);
             msg.reply(results[0].title + " 을 재생한다!");
-          })
-
-        })
-        .catch(console.log); 
+          });
+        }).catch(err => {
+          console.error(err);
+          return msg.member.voice.channel.leave();
+        }); 
     } else {
       msg.reply("먼저 보이스채널에 입장해주세요.");
     }
