@@ -11,6 +11,9 @@ const youtube = new Youtube(youtubeAPI);
 const ytdl = require('ytdl-core'); // npm install ytdl-core
 const { getVideoID } = require('ytdl-core');
 
+
+
+
 //npm install discord.js @discord/opus 필요
 //npm install --save ffmpeg-binaries 필요
 
@@ -19,7 +22,9 @@ const { getVideoID } = require('ytdl-core');
 //로그인 콘솔 출력
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
-  client.user.setPresence({ game: { name: "상메뭐로하지"}, status: "online"})
+  client.user.setActivity('도움말은 ~help', {
+    type : 'PLAYING'
+  })
 });
 
 
@@ -45,6 +50,13 @@ client.on("message", msg => {
   if (command === "현재시간") { 
     msg.reply(now.getFullYear() + "년 " + (now.getMonth()+1)  + "월 " +now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분");
   } // 테스트 조건문 end
+
+
+
+
+
+
+
 
 
 
@@ -127,24 +139,51 @@ client.on("message", msg => {
   //수정 필요
   //공부시간 순위
   if (command === '순위') {
+    var studyTimeArr = [];
     fs.readdir('./data/studyTime', (err, file_list) => { //폴더열기
-      var fileArr = file_list.toString().split(','); //studyTime 배열
+      var fileArr = file_list.toString().split(','); //studyTime 파일 배열
+      var cnt = 0
       fileArr.forEach((el,i) => {
-        fs.readFile("./data/studyTime/"+el, 'utf8', function(err, data) {
+        var data = fs.readFileSync("./data/studyTime/"+el, 'utf8');
           data = data.slice(0,-1);
           var timeDiv = data.toString().split(' ');
-          var sumHours = 0;
-          var sumMinutes = 0;
+          var sumTime = 0;
           timeDiv.forEach((j,k) => { // j형식 = ~.@ ( ~는 시, @는 분)
             var timeData = j.toString().split('.');
-            sumHours += Number(timeData[0]);
-            sumMinutes += Number(timeData[1]);
+            sumTime += Number(timeData[0])*60;
+            sumTime += Number(timeData[1]);
           });
-          msg.reply("\n<@" + el.replace('.txt','') + "> 님은 총" + sumHours + "시간 " + sumMinutes + "분 공부하였습니다.")
-        });
+          var tempArr = new Array(2);
+          tempArr[0] = sumTime;
+          tempArr[1] = el.replace('.txt','');
+          studyTimeArr.push(tempArr);
       });
+
+      //순위 출력
+      studyTimeArr.sort((a, b) => (b[0]+b[1]) - (a[0]+a[1]));
+      for (var i = 0; i < studyTimeArr.length; i++) {
+        msg.channel.send((i+1)+"등 <@"+studyTimeArr[i][1]+"> 님 "+parseInt(studyTimeArr[i][0]/60)+"시간 "+studyTimeArr[i][0]%60+"분 공부함.");
+      }
     });
+  }//공부시간 순위 end
+
+
+
+
+
+  /*
+  if (command === '순위출력') {
+    const exampleEmbed = new MessageEmbed()
+            .setColor('#0099ff')
+            .setTitle('공부시간 순위')
+            .setDescription('누가 공부를 제일 많이 했을까요?')
+            .addField("<@"+studyTimeArr[0][0]+">", String(studyTimeArr[0][1]) + ' ' + String(studyTimeArr[0][2]))
+            .addField("<@"+studyTimeArr[1][0]+">", String(studyTimeArr[1][1]) + ' ' + String(studyTimeArr[1][2]))
+            .setTimestamp()
+            .setFooter('공부시간 순위');
+          msg.reply(exampleEmbed);
   }
+  */
 
 
 
@@ -232,8 +271,6 @@ client.on("message", msg => {
 
 
   // 음악재생
-
-
   if (command === "음악") {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join()
