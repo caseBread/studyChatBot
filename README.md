@@ -72,6 +72,18 @@ npm install --save ffmpeg-binaries
 + Discord Developer Applications (https://discord.com/developers/applications)
 + Youtube API (https://console.developers.google.com/)
 
+위의 두 API를 다운받으신 후에 config.json 파일에 입력해주어야합니다.
+
+```
+config.json
+{
+    "prefix": "~",  
+    "token": "이곳에 디스코드 봇 API를 입력해주세요",
+    "youtubeAPI": "이곳에 유튜브 API를 입력해주세요"
+}
+```
+
+
 <br/>
 
 ## Usage
