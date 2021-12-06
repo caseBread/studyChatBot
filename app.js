@@ -45,7 +45,7 @@ client.on("message", msg => {
 
   //테스트 조건문
   if (command === "ping") {
-    msg.reply("Pong!")
+    msg.reply(":ping_pong:  Pong!")
   }
   if (command === "현재시간") { 
     msg.reply(now.getFullYear() + "년 " + (now.getMonth()+1)  + "월 " +now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분");
@@ -53,6 +53,28 @@ client.on("message", msg => {
 
 
 
+
+  //도움말 출력
+  if (command === "help") {
+    const helpEmbed = new MessageEmbed()
+      .setColor('#A40F16')
+      .setTitle(':lion_face: 쿠옹이 사용법 :lion_face: ')
+      .addField('ping', '쿠옹이와 탁구를 칩니다.')
+      .addField('현재시간', '현재시간을 알려줍니다.')
+      .addField('공부시작', '공부 시작!\n스톱워치가 켜집니다.')
+      .addField('공부끝', '공부 끝!\n스톱워치가 멈춥니다.')
+      .addField('순위', '공부한 시간 순위를 알려줍니다.')
+      .addField('디데이설정 (1) (2)', '디데이를 설정합니다.\n(1) : 이벤트이름\n(2) : 이벤트날짜 (mm/dd)\nex) ~디데이설정 기말고사 12/15')
+      .addField('디데이보기', '설정된 디데이를 보여줍니다.')
+      .addField('디데이삭제 (1)', '입력한 이벤트를 삭제합니다.\n(1) : 이벤트이름\nex)~디데이삭제 기말고사')
+      .addField('백색소음', '백색소음을 재생합니다.\n(먼저 음성채널에 입장해야합니다)')
+      .addField('재생 (1)','(1)을 재생합니다.\n(1) : 노래제목\n(먼저 음성채널에 입장해야합니다')
+      .setTimestamp()
+      .setFooter('쿠옹이 사용법');
+
+      
+    msg.reply(helpEmbed);
+  }
 
 
 
@@ -271,7 +293,7 @@ client.on("message", msg => {
 
 
   // 음악재생
-  if (command === "음악") {
+  if (command === "백색소음") {
     if (msg.member.voice.channel) {
       msg.member.voice.channel.join()
         .then(connection => {
