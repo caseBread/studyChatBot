@@ -61,6 +61,7 @@ client.on("message", msg => {
       .addField(prefix+'ping', '쿠옹이와 탁구를 칩니다.')
       .addField(prefix+'현재시간', '현재시간을 알려줍니다.')
       .addField(prefix+'공부시작', '공부 시작!\n스톱워치가 켜집니다.')
+      .addField(prefix+'공부중', '현재 공부중인 멤버를 알려줍니다.')
       .addField(prefix+'공부끝', '공부 끝!\n스톱워치가 멈춥니다.')
       .addField(prefix+'순위', '공부한 시간 순위를 알려줍니다.')
       .addField(prefix+'디데이설정 ①  ②', '디데이를 설정합니다.\n① : 이벤트이름\n② : 이벤트날짜 (mm/dd)\nex) '+prefix+'디데이설정 기말고사 12/15')
@@ -98,6 +99,28 @@ client.on("message", msg => {
 
 
 
+
+  if (command === "공부중") { 
+    var folder = fs.readdirSync('./data/stopWatch');
+    if (folder.length) {
+      for (var i = 0; i < folder.length; i++) {
+        var file = folder[i];
+        var userName = file.replace('.txt','');
+        var data = fs.readFileSync('./data/stopWatch/'+folder[i],'utf8');
+        var studyData = data.toString().split('.');
+        var studyHours = now.getHours() - Number(studyData[0]);
+        if (now.getMinutes() - Number(studyData[1]) < 0) {
+          var studyMinutes = 60 + now.getMinutes() - Number(studyData[1]);
+        }
+        else {
+          var studyMinutes = now.getMinutes() - Number(studyData[1]);
+        }
+        msg.channel.send("<@"+userName+"> 님 현재"+studyHours+"시간 "+studyMinutes+"분 공부중!");
+      }
+    } else {
+      msg.reply("현재 공부중인 사람이 없어요 :smiling_face_with_tear:")
+    }
+  }
 
 
   //공부끝 시간 체크
@@ -157,7 +180,7 @@ client.on("message", msg => {
 
 
 
-  //수정 필요
+
   //공부시간 순위
   if (command === '순위') {
     var studyTimeArr = [];
