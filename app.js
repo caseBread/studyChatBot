@@ -22,7 +22,7 @@ const { getVideoID } = require('ytdl-core');
 //로그인 콘솔 출력
 client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
-  client.user.setActivity('도움말은 ~help', {
+  client.user.setActivity('쿠옹이사용법! ➤ '+prefix+'도움말', {
     type : 'PLAYING'
   })
 });
@@ -55,20 +55,20 @@ client.on("message", msg => {
 
 
   //도움말 출력
-  if (command === "help") {
+  if (command === "help" || command === "도움말") {
     const helpEmbed = new MessageEmbed()
       .setColor('#A40F16')
       .setTitle(':lion_face: 쿠옹이 사용법 :lion_face: ')
-      .addField('ping', '쿠옹이와 탁구를 칩니다.')
-      .addField('현재시간', '현재시간을 알려줍니다.')
-      .addField('공부시작', '공부 시작!\n스톱워치가 켜집니다.')
-      .addField('공부끝', '공부 끝!\n스톱워치가 멈춥니다.')
-      .addField('순위', '공부한 시간 순위를 알려줍니다.')
-      .addField('디데이설정 (1) (2)', '디데이를 설정합니다.\n(1) : 이벤트이름\n(2) : 이벤트날짜 (mm/dd)\nex) ~디데이설정 기말고사 12/15')
-      .addField('디데이보기', '설정된 디데이를 보여줍니다.')
-      .addField('디데이삭제 (1)', '입력한 이벤트를 삭제합니다.\n(1) : 이벤트이름\nex)~디데이삭제 기말고사')
-      .addField('백색소음', '백색소음을 재생합니다.\n(먼저 음성채널에 입장해야합니다)')
-      .addField('재생 (1)','(1)을 재생합니다.\n(1) : 노래제목\n(먼저 음성채널에 입장해야합니다')
+      .addField(prefix+'ping', '쿠옹이와 탁구를 칩니다.')
+      .addField(prefix+'현재시간', '현재시간을 알려줍니다.')
+      .addField(prefix+'공부시작', '공부 시작!\n스톱워치가 켜집니다.')
+      .addField(prefix+'공부끝', '공부 끝!\n스톱워치가 멈춥니다.')
+      .addField(prefix+'순위', '공부한 시간 순위를 알려줍니다.')
+      .addField(prefix+'디데이설정 ①  ②', '디데이를 설정합니다.\n① : 이벤트이름\n② : 이벤트날짜 (mm/dd)\nex) '+prefix+'디데이설정 기말고사 12/15')
+      .addField(prefix+'디데이보기', '설정된 디데이를 보여줍니다.')
+      .addField(prefix+'디데이삭제 ①', '입력한 이벤트를 삭제합니다.\n① : 이벤트이름\nex)'+prefix+'디데이삭제 기말고사')
+      //.addField('백색소음', '백색소음을 재생합니다.\n(먼저 음성채널에 입장해야합니다)')
+      .addField(prefix+'재생 ①','①을 재생합니다.\n① : 노래제목\n(먼저 음성채널에 입장해야합니다')
       .setTimestamp()
       .setFooter('쿠옹이 사용법');
 
@@ -94,7 +94,7 @@ client.on("message", msg => {
       console.log('studyStart write end');
     });
     
-    msg.reply("공부시작! 열공~ ⁽⁽◝( ˙ ꒳ ˙ )◜⁾⁾");
+    msg.reply("공부시작! 열공~ :lion_face::lion_face:");
   } //공부시작 시간 체크 end
 
 
@@ -121,7 +121,7 @@ client.on("message", msg => {
         }
 
         //공부시간 출력
-        msg.reply(studyHours + "시간 " + studyMinutes + "분 공부하였습니다.");
+        msg.reply(studyHours + "시간 " + studyMinutes + "분 공부했어요.");
         console.log(studyHours + "h " + studyMinutes + "m");
 
         //studyTime 기록
@@ -149,7 +149,7 @@ client.on("message", msg => {
       //(공부시작을 하지 않은 경우)
       if (error.code === "ENOENT") {
         console.log("user no start");
-        msg.reply("아직 공부를 시작하지 않았습니다.");
+        msg.reply("아직 공부를 시작하지 않았어요.");
       }
     }
 
@@ -184,7 +184,7 @@ client.on("message", msg => {
       //순위 출력
       studyTimeArr.sort((a, b) => (b[0]+b[1]) - (a[0]+a[1]));
       for (var i = 0; i < studyTimeArr.length; i++) {
-        msg.channel.send((i+1)+"등 <@"+studyTimeArr[i][1]+"> 님 "+parseInt(studyTimeArr[i][0]/60)+"시간 "+studyTimeArr[i][0]%60+"분 공부함.");
+        msg.channel.send((i+1)+"등 <@"+studyTimeArr[i][1]+"> 님 "+parseInt(studyTimeArr[i][0]/60)+"시간 "+studyTimeArr[i][0]%60+"분 공부했어요");
       }
     });
   }//공부시간 순위 end
@@ -215,7 +215,7 @@ client.on("message", msg => {
 
   //디데이부분 수정 필요
   //디데이 설정 
-  if (msg.content.startsWith("~디데이설정")) {
+  if (msg.content.startsWith(prefix+"디데이설정")) {
     console.log("dDaySetStart");
     try {
       var dDayData = msg.toString().split(" ");
@@ -230,7 +230,7 @@ client.on("message", msg => {
       msg.reply(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
     
     } catch {
-      msg.reply("양식이 올바르지 않습니다. 예) ~디데이설정 기말고사 12/15");
+      msg.reply("양식이 올바르지 않아요. 예) "+prefix+"디데이설정 기말고사 12/15");
     }
 
     
@@ -250,8 +250,17 @@ client.on("message", msg => {
           var dDayWhen = data.toString().split('/');
           var t1 = moment(); //현재 날짜
           var t2 = moment(String(now.getFullYear()) + "-" + dDayWhen[0] + "-" + dDayWhen[1] , 'YYYY-MM-DD'); // 저장된 날짜
+          var dDayPrint = (Number(t2.diff(t1,'days')) + 2);
+          if (dDayPrint > 0) {
+            msg.reply(el.replace('.txt','') + "까지 D - "+ dDayPrint); //dDay 답장 (날짜안지난경우)
+          }
+          else if (dDayPrint < 0) {
+            msg.reply(el.replace('.txt','') + "까지 D + "+ (-dDayPrint)); //dDay 답장 (날짜지난경우)
+          }
+          else {
+            msg.reply(el.replace('.txt','') + "까지 D - day"); //dDay 답장 (오늘인경우)
+          }
 
-          msg.reply(el.replace('.txt','') + "까지 D - "+ (Number(t2.diff(t1,'days')) + 2)); //dDay 답장
         });
       });
     });
@@ -259,7 +268,7 @@ client.on("message", msg => {
 
 
   //디데이 삭제
-  if (msg.content.startsWith("~디데이삭제")) {
+  if (msg.content.startsWith(prefix+"디데이삭제")) {
     var dDayData = msg.toString().split(" ");
     var fileName = "data/dDay/" + dDayData[1] + ".txt";
     try {
@@ -267,7 +276,7 @@ client.on("message", msg => {
       fs.statSync(fileName); //파일 존재 확인
       try {
         fs.unlinkSync(fileName) // 파일 존재시 삭제
-        msg.reply("해당 이벤트가 삭제되었습니다.");
+        msg.reply("해당 이벤트가 삭제되었어요");
     } catch (error) {
         if(err.code == 'ENOENT'){
             console.log("file delete error");
@@ -279,7 +288,7 @@ client.on("message", msg => {
       //파일이 없다면 에러 발생
       msg.reply("설정되지 않은 이벤트입니다.");
         if (error.code === "ENOENT") {
-           console.log("파일이 존재하지 않습니다.");
+           console.log("파일이 존재하지 않아요");
         }
     }
     
@@ -303,7 +312,7 @@ client.on("message", msg => {
         })
         .catch(console.log); 
     } else {
-      msg.reply("먼저 보이스채널에 입장해주세요.");
+      msg.reply("먼저 보이스채널에 입장해주세요!");
     }
   } // 음악재생 end
 
@@ -315,7 +324,7 @@ client.on("message", msg => {
       msg.member.voice.channel.leave();
       msg.reply('bye!');
     } else {
-      msg.reply('이미 나왔어요.');
+      msg.reply('이미 나왔어요 :lion_face:...');
     }
   } // 보이스채널 나가기 end
 
@@ -335,14 +344,14 @@ client.on("message", msg => {
               //내용 추가 필요
             });
             console.log(results[0].title);
-            msg.reply(results[0].title + " 을 재생한다!");
+            msg.reply(results[0].title + " 을 재생할게요!");
           });
         }).catch(err => {
           console.error(err);
           return msg.member.voice.channel.leave();
         }); 
     } else {
-      msg.reply("먼저 보이스채널에 입장해주세요.");
+      msg.reply("먼저 보이스채널에 입장해주세요!");
     }
   } // 유튜브 음악 재생 end
   
