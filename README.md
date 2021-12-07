@@ -134,7 +134,7 @@ This is an example of how to list things you need to use the software and how to
 
 
 * npm
-  ```sh
+  ```
   npm install
   ```
 
