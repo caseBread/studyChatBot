@@ -1,10 +1,10 @@
 {
-  "name" : "studybot",
-  "version" : "0.0.0",
-  "private" : "true",
-  "description" : "discord chatbot for study",
-  "main" : "index.js",
-  "author" : "kgu0515@khu.ac.kr",
+  "name": "studybot",
+  "version": "0.0.0",
+  "private": "true",
+  "description": "discord chatbot for study",
+  "main": "index.js",
+  "author": "kgu0515@khu.ac.kr",
   "dependencies": {
     "@discordjs/opus": "^0.5.3",
     "discord.js": "^12.5.3",
