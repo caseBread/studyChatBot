@@ -11,6 +11,8 @@
     "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.1-security",
     "moment": "^2.29.1",
-    "stream": "^0.0.2"
+    "stream": "^0.0.2",
+    "simple-youtube-api": "^5.2.1",
+    "ytdl-core": "^4.9.1"
   }
 }

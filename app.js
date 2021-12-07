@@ -1,21 +1,20 @@
 const {prefix, token, youtubeAPI} = require('./config.json');
-const Discord = require("discord.js") // npm install discord.js 필요
+const Discord = require("discord.js") 
 const {MessageEmbed} = require('discord.js');
 const client = new Discord.Client()
-const fs = require('fs'); // 파일 입출력 모듈
+const fs = require('fs'); 
 const internal = require("stream");
-var now = new Date(); // 현재날짜 및 시간 객체
-const moment = require('moment') // npm install --save moment 필요 (디데이 출력 모듈)
-const Youtube = require('simple-youtube-api'); // npm install simple-youtube-api
+var now = new Date(); 
+const moment = require('moment') 
+const Youtube = require('simple-youtube-api'); 
 const youtube = new Youtube(youtubeAPI);
-const ytdl = require('ytdl-core'); // npm install ytdl-core
+const ytdl = require('ytdl-core'); 
 const { getVideoID } = require('ytdl-core');
 
 
 
 
-//npm install discord.js @discord/opus 필요
-//npm install --save ffmpeg-binaries 필요
+
 
 
 
