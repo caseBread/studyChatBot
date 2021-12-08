@@ -260,7 +260,6 @@ client.on("message", msg => {
       fs.writeFileSync(fileName, dDayData[2], 'utf8', function(error){  // 파일에 data내용 저장
         console.log('dDaySet write end');
       });
-      console.log(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
       msg.reply(dDayWhen[0] + "월 " + dDayWhen[1] + "일에 " + dDayTitle + "이(가) 설정되었습니다.");
     } else {
       msg.reply("잘못된 날짜를 입력하였어요.");
@@ -297,7 +296,6 @@ client.on("message", msg => {
           }
           else {
             msg.channel.send(el.replace('.txt','') + "까지 D - day"); //dDay 답장 (오늘인경우)
-            console.log(dDayPrint, t1, t2);
           }
 
         });
