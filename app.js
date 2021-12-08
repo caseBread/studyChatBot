@@ -4,7 +4,7 @@ const {MessageEmbed} = require('discord.js');
 const client = new Discord.Client()
 const fs = require('fs'); 
 const internal = require("stream");
-const now = new Date(); 
+let now = new Date(); 
 const moment = require('moment') 
 const Youtube = require('simple-youtube-api'); 
 const youtube = new Youtube(youtubeAPI);
@@ -38,7 +38,7 @@ client.on("ready", () => {
 //명령어 인식
 client.on("message", msg => {
   console.log(msg.author.id, msg.content); //채팅을 로그에 띄우기
-  
+  now = new Date(); 
 
   //prefix로 시작하지 않는경우 통과   를 위한 명령어 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return; 
@@ -140,6 +140,8 @@ client.on("message", msg => {
     var fileName = "data/stopWatch/" + msg.channel.id + "/" + msg.author.id + ".txt";
 
     try {
+      fs.statSync(fileName);
+      
     // 파일 있는지 확인. 없으면 catch
 
     //(공부시작을 한 경우) : 공부시간 계산
