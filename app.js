@@ -27,15 +27,18 @@ client.on("ready", () => {
   console.log(`Logged in as ${client.user.tag}!`)
   client.user.setActivity('쿠옹이사용법! ➤ '+prefix+'도움말', {
     type : 'PLAYING'
-  })
+  });
+  makeFolder('./data');
+  makeFolder('./data/dDay');
+  makeFolder('./data/studyTime');
+  makeFolder('./data/stopWatch');
 });
 
 
 //명령어 인식
 client.on("message", msg => {
   console.log(msg.author.id, msg.content); //채팅을 로그에 띄우기
-
-
+  
 
   //prefix로 시작하지 않는경우 통과   를 위한 명령어 
   if (!msg.content.startsWith(prefix) || msg.author.bot) return; 
