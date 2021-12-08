@@ -274,13 +274,13 @@ client.on("message", msg => {
           var t2 = moment(String(now.getFullYear()) + "-" + dDayWhen[0] + "-" + dDayWhen[1] , 'YYYY-MM-DD'); // 저장된 날짜
           var dDayPrint = (Number(t2.diff(t1,'days')) + 2);
           if (dDayPrint > 0) {
-            msg.reply(el.replace('.txt','') + "까지 D - "+ dDayPrint); //dDay 답장 (날짜안지난경우)
+            msg.channel.send(el.replace('.txt','') + "까지 D - "+ dDayPrint); //dDay 답장 (날짜안지난경우)
           }
           else if (dDayPrint < 0) {
-            msg.reply(el.replace('.txt','') + "까지 D + "+ (-dDayPrint)); //dDay 답장 (날짜지난경우)
+            msg.channel.send(el.replace('.txt','') + "까지 D + "+ (-dDayPrint)); //dDay 답장 (날짜지난경우)
           }
           else {
-            msg.reply(el.replace('.txt','') + "까지 D - day"); //dDay 답장 (오늘인경우)
+            msg.channel.send(el.replace('.txt','') + "까지 D - day"); //dDay 답장 (오늘인경우)
           }
 
         });
