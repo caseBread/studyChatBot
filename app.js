@@ -11,7 +11,11 @@ const youtube = new Youtube(youtubeAPI);
 const ytdl = require('ytdl-core'); 
 const { getVideoID } = require('ytdl-core');
 
-
+const makeFolder = (dir) => {
+  if (!fs.existsSync(dir)) {
+    fs.mkdirSync(dir);
+  }
+}
 
 
 
@@ -45,6 +49,8 @@ client.on("message", msg => {
   //테스트 조건문
   if (command === "ping") {
     msg.reply(":ping_pong:  Pong!")
+    msg.reply(msg.author.username)
+    msg.reply(msg.channel.id)
   }
   if (command === "현재시간") { 
     msg.reply(now.getFullYear() + "년 " + (now.getMonth()+1)  + "월 " +now.getDate() + "일 " + now.getHours() + "시 " + now.getMinutes() + "분");
@@ -88,8 +94,9 @@ client.on("message", msg => {
   if (command === "공부시작") {
     var data = String(now.getHours()) +"."+ String(now.getMinutes());
     console.log(msg.author.id);
-
-    var fileName = "./data/stopWatch/" + msg.author.id + ".txt";
+    
+    makeFolder("./data/stopWatch/"+msg.channel.id);
+    var fileName = "./data/stopWatch/" + msg.channel.id+"/"+msg.author.id + ".txt";
     fs.writeFileSync(fileName, data, 'utf8', function(error){  // 파일에 data내용 저장
       console.log('studyStart write end');
     });
@@ -101,12 +108,13 @@ client.on("message", msg => {
 
 
   if (command === "공부중") { 
-    var folder = fs.readdirSync('./data/stopWatch');
+    makeFolder('./data/stopWatch/'+msg.channel.id);
+    var folder = fs.readdirSync('./data/stopWatch/'+msg.channel.id);
     if (folder.length) {
       for (var i = 0; i < folder.length; i++) {
         var file = folder[i];
         var userName = file.replace('.txt','');
-        var data = fs.readFileSync('./data/stopWatch/'+folder[i],'utf8');
+        var data = fs.readFileSync('./data/stopWatch/'+msg.channel.id+"/"+folder[i],'utf8');
         var studyData = data.toString().split('.');
         var studyHours = now.getHours() - Number(studyData[0]);
         if (now.getMinutes() - Number(studyData[1]) < 0) {
@@ -125,7 +133,8 @@ client.on("message", msg => {
 
   //공부끝 시간 체크
   if (command === "공부끝") {
-    var fileName = "data/stopWatch/" + msg.author.id + ".txt";
+    makeFolder('./data/stopWatch/'+msg.channel.id);
+    var fileName = "data/stopWatch/" + msg.channel.id + "/" + msg.author.id + ".txt";
 
     try {
     // 파일 있는지 확인. 없으면 catch
@@ -147,8 +156,9 @@ client.on("message", msg => {
         console.log(studyHours + "h " + studyMinutes + "m");
 
         //studyTime 기록
-        var fileName = "data/studyTime/" + msg.author.id + ".txt";
+        var fileName = "data/studyTime/" + msg.channel.id + "/" + msg.author.id + ".txt";
         var appendData = String(studyHours) + "." + String(studyMinutes) + " ";
+        makeFolder("./data/studyTime/"+msg.channel.id);
         fs.appendFile(fileName, appendData, function(err) {
           if (err) throw err;
           console.log('The "data to append" was appended to file!');
@@ -184,11 +194,12 @@ client.on("message", msg => {
   //공부시간 순위
   if (command === '순위') {
     var studyTimeArr = [];
-    fs.readdir('./data/studyTime', (err, file_list) => { //폴더열기
+    makeFolder('./data/studyTime/'+msg.channel.id);
+    fs.readdir('./data/studyTime/' + msg.channel.id, (err, file_list) => { //폴더열기
       var fileArr = file_list.toString().split(','); //studyTime 파일 배열
       var cnt = 0
       fileArr.forEach((el,i) => {
-        var data = fs.readFileSync("./data/studyTime/"+el, 'utf8');
+        var data = fs.readFileSync("./data/studyTime/"+msg.channel.id+"/"+el, 'utf8');
           data = data.slice(0,-1);
           var timeDiv = data.toString().split(' ');
           var sumTime = 0;
@@ -243,8 +254,8 @@ client.on("message", msg => {
       var dDayData = msg.toString().split(" ");
       var dDayTitle = dDayData[1];
       var dDayWhen = dDayData[2].toString().split('/');
-      var fileName = "data/dDay/" + dDayTitle + ".txt";
-    
+      var fileName = "data/dDay/" + msg.channel.id + "/" + dDayTitle + ".txt";
+      makeFolder("./data/dDay/"+msg.channel.id);
       fs.writeFileSync(fileName, dDayData[2], 'utf8', function(error){  // 파일에 data내용 저장
         console.log('dDaySet write end');
       });
@@ -264,15 +275,16 @@ client.on("message", msg => {
 
   //디데이 달력 보기
   if (command === "디데이보기") {
-    fs.readdir('./data/dDay', (err, file_list) => { //폴더열기
+    makeFolder('./data/dDay/'+msg.channel.id);
+    fs.readdir('./data/dDay/' + msg.channel.id, (err, file_list) => { //폴더열기
+      if (file_list != 0) {
       var fileArr = file_list.toString().split(','); //dDay 배열
-
       fileArr.forEach((el,i) => {
-        fs.readFile("./data/dDay/"+el, 'utf8', function(err, data) {
+        fs.readFile("./data/dDay/" + msg.channel.id + "/" + el, 'utf8', function(err, data) {
           var dDayWhen = data.toString().split('/');
           var t1 = moment(); //현재 날짜
           var t2 = moment(String(now.getFullYear()) + "-" + dDayWhen[0] + "-" + dDayWhen[1] , 'YYYY-MM-DD'); // 저장된 날짜
-          var dDayPrint = (Number(t2.diff(t1,'days')) + 2);
+          var dDayPrint = (Number(t2.diff(t1,'days')) + 1);
           if (dDayPrint > 0) {
             msg.channel.send(el.replace('.txt','') + "까지 D - "+ dDayPrint); //dDay 답장 (날짜안지난경우)
           }
@@ -284,7 +296,12 @@ client.on("message", msg => {
           }
 
         });
+      
       });
+    } else {
+      msg.reply("설정된 이벤트가 없어요!");
+    }
+    
     });
   } //디데이 달력 보기 end
 
@@ -292,7 +309,8 @@ client.on("message", msg => {
   //디데이 삭제
   if (msg.content.startsWith(prefix+"디데이삭제")) {
     var dDayData = msg.toString().split(" ");
-    var fileName = "data/dDay/" + dDayData[1] + ".txt";
+    makeFolder('./data/dDay/'+msg.channel.id);
+    var fileName = "data/dDay/" + msg.channel.id + "/" + dDayData[1] + ".txt";
     try {
 
       fs.statSync(fileName); //파일 존재 확인
