@@ -11,8 +11,9 @@
     "ffmpeg-static": "^4.4.0",
     "fs": "^0.0.1-security",
     "moment": "^2.29.1",
-    "stream": "^0.0.2",
+    "moment-timezone": "^0.5.34",
     "simple-youtube-api": "^5.2.1",
+    "stream": "^0.0.2",
     "ytdl-core": "^4.9.1"
   }
 }

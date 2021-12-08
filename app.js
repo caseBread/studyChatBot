@@ -6,6 +6,9 @@ const fs = require('fs');
 const internal = require("stream");
 let now = new Date(); 
 const moment = require('moment') 
+require('moment-timezone');
+moment.tz.setDefault("Asia/Seoul");
+exports.moment = moment;
 const Youtube = require('simple-youtube-api'); 
 const youtube = new Youtube(youtubeAPI);
 const ytdl = require('ytdl-core'); 
