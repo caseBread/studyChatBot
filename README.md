@@ -185,7 +185,7 @@ config.json
     - [x] Music Play Function in Discord Bot 구현
 - [x] AWS EC2 활용
     - [x] Amazon Cloud Server Hosting
-    - [x] DiscordBot online for 24/7 구현
+    - [x] DiscordBot Demo online for 24/7 구현
 
 See the [open issues](http://khuhub.khu.ac.kr/2020104050/studyChatBot/issues) for a full list of proposed features (and known issues).
 
