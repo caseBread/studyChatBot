@@ -28,7 +28,7 @@
     <img src="images/logo.jpg" alt="Logo" width="80" height="80">
   </a>
 
-  <h3 align="center">디스코드 스터디 챗봇</h3>
+  <h3 align="center">Discord ChatBot for Study</h3>
 
   <p align="center">
     디스코드 상에서 스터디 진행할 수 있는 툴
@@ -68,7 +68,6 @@
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
     <li><a href="#contact">Contact</a></li>
-    <li><a href="#acknowledgments">Acknowledgments</a></li>
   </ol>
 </details>
 
@@ -79,27 +78,22 @@
 
 ![Product Name Screen Shot][product-screenshot]
 
-### 개요
-~ 공부합시다 우리 ~<br/>
-블라블라
-
 ### 핵심기능
 
-1. **오늘 얼마나 공부했는지 (시간, 공부시작, 공부중지, 등)<br/>**
-    + 어제보다 얼마나 공부했는지<br/>
-    + 주간 평균, 한달 평균 공부 시간<br/>
+1. **StopWatch 기능<br/>**
+  + 공부한 시간을 기록하고 어제보다 더 나은 오늘을, 오늘보다 더 나은 내일을 만들어 보아요!
 <br/>
-2. **공부시간 순위<br/>**
-    + 일간 순위<br/>
-    + 주간 순위<br/>
+
+2. **공부시간 순위 확인<br/>**
+  + 스터디멤버들과 함께 경쟁하며 발전해보아요! 
 <br/>
+
 3. **D-day 기능<br/>**
+  + 중요한 이벤트를 기록하고 스터디멤버들과 공유해보아요!
 <br/>
-4. 음악 재생 기능
 
-+ 공부에 집중되는 백색소음 재생 기능<br/>
-+ 유튜브에서 원하는 노래 재생 기능
-
+4. **음악 재생 기능<br/>**
+  + 같이 공부하는 스터디 멤버들과 한 공간에 함께 있는듯한 느낌을 가져보아요!
 <br/>
 
 <p align="right">(<a href="#top">back to top</a>)</p>
@@ -107,8 +101,6 @@
 
 
 ### Built With
-
-This section should list any major frameworks/libraries used to bootstrap your project. Leave any add-ons/plugins for the acknowledgements section. Here are a few examples.
 
 * [Node.js](https://nodejs.org/en/)
 * [discord.js](https://discord.js.org/)
@@ -123,13 +115,9 @@ This section should list any major frameworks/libraries used to bootstrap your p
 
 * 이 챗봇 프로그램은 디스코드 상에서 동작합니다. 먼저 [디스코드를 설치](https://discord.com/)해 주신 후 다음의 과정을 진행해주시기 바랍니다.
 
-### Prerequisites
+### Library Installation
 
-This is an example of how to list things you need to use the software and how to install them.
-
-
-* npm
-  ```
+* ```
   npm install
   ```
 
@@ -156,8 +144,6 @@ config.json
 
 -------------------
 
-### 명령어
-
 
 + ~ping<br/>쿠옹이와 탁구를 칩니다.
 + ~현재시간<br/>현재시간을 알려줍니다.
@@ -176,16 +162,16 @@ config.json
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Discord API 연동
-    - [x] Discord ChatBot 구현 through discord.js
-- [x] StopWatch 구현
-    - [x] StudyTime Ranking 구현
-- [x] dDay 구현
-- [x] Youtube API 연동
-    - [x] Music Play Function in Discord Bot 구현
-- [x] AWS EC2 활용
+- [x] Link Discord API
+    - [x] Implement Discord ChatBot through discord.js
+- [x] Implement StopWatch
+    - [x] Implement StudyTime Ranking 
+- [x] Implement dDay
+- [x] Link Youtube API
+    - [x] Implement Music Play Function in Discord Bot
+- [x] Using AWS EC2
     - [x] Amazon Cloud Server Hosting
-    - [x] DiscordBot Demo online for 24/7 구현
+    - [x] Always run DiscordBot demo
 
 See the [open issues](http://khuhub.khu.ac.kr/2020104050/studyChatBot/issues) for a full list of proposed features (and known issues).
 
@@ -196,9 +182,10 @@ See the [open issues](http://khuhub.khu.ac.kr/2020104050/studyChatBot/issues) fo
 <!-- CONTRIBUTING -->
 ## Contributing
 
-Contributions are what make the open source community such an amazing place to learn, inspire, and create. Any contributions you make are **greatly appreciated**.
+Any contributions you make are **greatly appreciated**.
 
-If you have a suggestion that would make this better, please fork the repo and create a pull request. You can also simply open an issue with the tag "enhancement".
+If you have a suggestion that would make this better, please fork the repo and create a pull request. 
+
 Don't forget to give the project a star! Thanks again!
 
 1. Fork the Project
@@ -223,20 +210,13 @@ Distributed under the MIT License. See `LICENSE.txt` for more information.
 <!-- CONTACT -->
 ## Contact
 
-김건우 - kgu0515@khu.ac.kr
++ 김건우 - kgu0515@khu.ac.kr
 
-Project Link: [http://khuhub.khu.ac.kr/2020104050/studyChatBot.git](http://khuhub.khu.ac.kr/2020104050/studyChatBot.git)
-
-<p align="right">(<a href="#top">back to top</a>)</p>
-
-
-
-<!-- ACKNOWLEDGMENTS -->
-## Acknowledgments
-
-
++ Project Link: [http://khuhub.khu.ac.kr/2020104050/studyChatBot.git](http://khuhub.khu.ac.kr/2020104050/studyChatBot.git)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
+
+
 
 
 
