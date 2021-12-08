@@ -176,15 +176,18 @@ config.json
 <!-- ROADMAP -->
 ## Roadmap
 
-- [x] Add Changelog
-- [x] Add back to top links
-- [ ] Add Additional Templates w/ Examples
-- [ ] Add "components" document to easily copy & paste sections of the readme
-- [ ] Multi-language Support
-    - [ ] Chinese
-    - [ ] Spanish
+- [x] Discord API 연동
+    - [x] Discord ChatBot 구현 through discord.js
+- [x] StopWatch 구현
+    - [x] StudyTime Ranking 구현
+- [x] dDay 구현
+- [x] Youtube API 연동
+    - [x] Music Play Function in Discord Bot 구현
+- [x] AWS EC2 활용
+    - [x] Amazon Cloud Server Hosting
+    - [x] DiscordBot online for 24/7 구현
 
-See the [open issues](https://github.com/othneildrew/Best-README-Template/issues) for a full list of proposed features (and known issues).
+See the [open issues](http://khuhub.khu.ac.kr/2020104050/studyChatBot/issues) for a full list of proposed features (and known issues).
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
@@ -231,16 +234,7 @@ Project Link: [http://khuhub.khu.ac.kr/2020104050/studyChatBot.git](http://khuhu
 <!-- ACKNOWLEDGMENTS -->
 ## Acknowledgments
 
-Use this space to list resources you find helpful and would like to give credit to. I've included a few of my favorites to kick things off!
 
-* [Choose an Open Source License](https://choosealicense.com)
-* [GitHub Emoji Cheat Sheet](https://www.webpagefx.com/tools/emoji-cheat-sheet)
-* [Malven's Flexbox Cheatsheet](https://flexbox.malven.co/)
-* [Malven's Grid Cheatsheet](https://grid.malven.co/)
-* [Img Shields](https://shields.io)
-* [GitHub Pages](https://pages.github.com)
-* [Font Awesome](https://fontawesome.com)
-* [React Icons](https://react-icons.github.io/react-icons/search)
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
